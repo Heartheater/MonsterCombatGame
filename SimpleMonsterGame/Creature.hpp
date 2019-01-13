@@ -37,6 +37,7 @@ public:
 	bool isDead() const;
 
 	void addGold(const int amount);
+	void printAllStats() const;
 
 };
 

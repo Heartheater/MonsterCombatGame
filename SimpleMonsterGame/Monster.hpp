@@ -27,7 +27,7 @@ public:
 		MAX_TYPES
 	};
 private:
-
+	
 	//lookup table for default monster data
 	static MonsterData monsterData[MAX_TYPES];
 public:
@@ -42,6 +42,7 @@ public:
 
 	//output operator prints Monster stats
 	friend std::ostream& operator<<(std::ostream &out, const Monster &m);
+
 };
 
 

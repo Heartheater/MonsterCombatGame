@@ -39,8 +39,6 @@ Monster Monster::getRandomMonster()
 
 std::ostream& operator<<(std::ostream &out, const Monster &m)
 {
-	out << "\n    " << m.getName() << "\n";
-	out << "\tHEALTH: " << m.getHealth();
-	out << "\n\tATTACK: " << m.getDamage() <<"\n";
+	out << "\n\nMONSTER:  " << m.getName() << "  HEALTH: " << m.getHealth() << "\n";
 	return out;
 }

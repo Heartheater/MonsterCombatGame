@@ -62,3 +62,11 @@ void Creature::increaseDamage(const int amount)
 {
 	m_damage += amount;
 }
+
+void Creature::printAllStats() const
+{
+	std::cout << "\n    " << m_name << "\n";
+	std::cout << "\tHEALTH: " << m_health;
+	std::cout << "\n\tATTACK: " << m_damage;
+	std::cout << "\n\tGOLD: " << m_goldCarried << "\n";
+}

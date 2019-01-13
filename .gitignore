@@ -255,6 +255,7 @@ paket-files/
 
 # CodeRush
 .cr/
+TODO.txt
 
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
