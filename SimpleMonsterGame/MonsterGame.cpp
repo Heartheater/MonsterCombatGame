@@ -24,32 +24,54 @@ void MonsterGame::startGame() {
 	endGame();
 }
 
-bool MonsterGame::getRunOrFight()
+void MonsterGame::printMenu()
 {
-	char runOrFight = 'R';
-	std::cout << "\n(R)un or (F)ight? ";
+	std::cout << "\nMenu Options: ";
+	std::cout << "\n\t(R)un \n\t(F)ight \n\t(M)onster Status\n\t(P)layer Status.";
+}
+
+MonsterGame::Actions MonsterGame::getMenuInput(const Monster &m)
+{
+	char input = '0';
+
 	//loop until player chooses valid response
 	while (true)
 	{
-		std::cin >> runOrFight;
+		std::cout << m << "\nInput:  ";
+		std::cin >> input;
+
 		if (std::cin.fail())
 		{
-			std::cout << "\nPlease enter either \"R\" or \"F\" ";
+			std::cout << "\nPlease enter a valid menu option. Enter 'h' for help.";
 			std::cin.ignore(32767, '\n');
 			std::cin.clear();
 		}
 		else
 		{
-			switch (runOrFight)
+			switch (input)
 			{
 			case 'R':
 			case 'r':
-				return false;
+				return Actions::RUN;
 			case 'F':
 			case 'f':
-				return true;
+				return Actions::FIGHT;
+			case 'M':
+			case 'm':
+				//print Monster's Stats
+				m.printAllStats();
+				break;
+			case 'P':
+			case 'p':
+				//print player's stats
+				m_player.printAllStats();
+				break;
+			case 'H':
+			case 'h':
+				std::cout << "Please type a single letter:\n'R' for Run, 'F' for Fight, 'M' for Monster's Status, or 'P' for Player's status. Then hit enter to proceed.\nLetters may also be in lowercase.\n";
+				break;
 			default:
-				std::cout << "\nPlease enter either \"R\" or \"F\" ";
+				std::cout << "\nPlease enter a valid menu option. Enter 'h' for help.";
 				break;
 			}
 		}
@@ -57,9 +79,10 @@ bool MonsterGame::getRunOrFight()
 }
 
 
+
 bool MonsterGame::runGame(Player &player)
 {
-	MenuOptions chosenOption = MenuOptions::RUN;
+	Actions chosenOption = Actions::RUN;
 	bool playerIsFighting = false;
 
 	//game loops until player wins or dies
@@ -72,7 +95,8 @@ bool MonsterGame::runGame(Player &player)
 		
 		//player is now fighting a new monster
 		playerIsFighting = true;
-
+		//print out the menu at beginning of fight
+		printMenu();
 		while (playerIsFighting)
 		{
 			//first check if player already died
@@ -83,11 +107,12 @@ bool MonsterGame::runGame(Player &player)
 				return false;
 			}
 
-			//run the menu and take player input
-			chosenOption = MonsterGame::runMenu(m);
+			// listen for player input and returns if the player chose to either run or fight
+			chosenOption = MonsterGame::getMenuInput(m);
 
+			std::cout << "you chose: " << chosenOption;
 
-			if (chosenOption == MenuOptions::FIGHT)
+			if (chosenOption == Actions::FIGHT)
 			{
 				std::cout << "-------------------------------------\n";
 				std::cout << "\nYou fight the " << m.getName() << ".\n";
@@ -96,7 +121,7 @@ bool MonsterGame::runGame(Player &player)
 				//decrease monsters health when player attacks
 				m.reduceHealth(player.getDamage());
 
-				//check if player won
+				//check if monster is dead and player won
 				if (m.isDead())
 				{
 					std::cout << "\nYou defeated the " << m.getName() << " and got " << m.getGold() << " gold.\n";
@@ -105,9 +130,8 @@ bool MonsterGame::runGame(Player &player)
 					std::cout << "\nYou leveled up to level " << player.getLevel() << "! +1ATTACK (" << player.getDamage() << ")\n";
 					playerIsFighting = false;
 				}
-				else
+				else //otherwise it's the monster's turn to attack
 				{
-					//otherwise it's the monster's turn to attack
 					player.reduceHealth(m.getDamage()); //player takes a hit
 					std::cout << "\n" << m.getName() << " attacks!\nYou took " << m.getDamage() << " damage.";
 					std::cout << "\nYou have " << player.getHealth() << " health.\n";
@@ -115,7 +139,9 @@ bool MonsterGame::runGame(Player &player)
 			}
 
 			else //player decides to run
-			{	//get a random number between 1 and 2 to decide if player escapes or not
+			{	
+				std::cout << "-------------------------------------\n";
+				//get a random number between 1 and 2 to decide if player escapes or not
 				if (Monster::getRandomNumber(1, 2) == 1)
 				{
 					std::cout << "\nYou ran away!\n";
@@ -131,7 +157,6 @@ bool MonsterGame::runGame(Player &player)
 
 				}
 			}
-
 		}
 	}
 	return true;
