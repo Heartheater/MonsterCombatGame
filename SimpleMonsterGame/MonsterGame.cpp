@@ -24,7 +24,7 @@ void MonsterGame::startGame() {
 	endGame();
 }
 
-void MonsterGame::printMenu()
+void MonsterGame::printMenu() const
 {
 	std::cout << "\nMenu Options: ";
 	std::cout << "\n\t(R)un \n\t(F)ight \n\t(M)onster Status\n\t(P)layer Status.";
@@ -110,8 +110,6 @@ bool MonsterGame::runGame(Player &player)
 			// listen for player input and returns if the player chose to either run or fight
 			chosenOption = MonsterGame::getMenuInput(m);
 
-			std::cout << "you chose: " << chosenOption;
-
 			if (chosenOption == Actions::FIGHT)
 			{
 				std::cout << "-------------------------------------\n";
@@ -128,6 +126,25 @@ bool MonsterGame::runGame(Player &player)
 					player.addGold(m.getGold());
 					player.levelUp();
 					std::cout << "\nYou leveled up to level " << player.getLevel() << "! +1ATTACK (" << player.getDamage() << ")\n";
+					//check if the monster had an item
+					if (m.checkHasItem())
+					{	
+						switch (m.getItem())
+						{
+						case Monster::Item::POTION:
+							std::cout << "\n\nThe Monster dropped a Potion. ";
+							if (player.getHealth() < player.m_baseHealth) //add health if player doesnt have full health
+							{
+								std::cout <<"\nYou recovered 1 health!\n";
+								player.addHealth(1);
+							}
+							else
+							{
+								std::cout << "\nYour health is already maxed out.\n";
+							}
+						}
+					}
+
 					playerIsFighting = false;
 				}
 				else //otherwise it's the monster's turn to attack

@@ -3,14 +3,9 @@
 
 
 Creature::Creature(const std::string &name, const char symbol, const int health, const int damage, const int gold)
-	: m_name{ name }, m_symbol{ symbol }, m_health{ health }, m_damage{ damage }, m_goldCarried{gold}
+	: m_name{ name }, m_symbol{ symbol }, m_health{ health }, m_damage{ damage }, m_goldCarried{gold}, m_baseHealth{health}
 {
 
-}
-
-
-Creature::~Creature()
-{
 }
 
 const std::string& Creature::getName() const
@@ -28,6 +23,16 @@ const int Creature::getHealth() const
 	return m_health;
 }
 
+void Creature::addHealth(const int amount)
+{
+	if (amount > 0) 
+	{ //add health up to the starting base health
+		if ((m_health + amount) <= m_baseHealth)
+			m_health += amount;
+		else
+			m_health = m_baseHealth;
+	}
+}
 
 const int Creature::getDamage() const
 {

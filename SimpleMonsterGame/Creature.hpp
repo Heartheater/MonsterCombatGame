@@ -15,10 +15,11 @@ private:
 
 protected:
 	void increaseDamage(const int amount);
-
+	void addHealth(const int amount);
 public:
+	const int m_baseHealth;
+
 	Creature(const std::string &name, const char symbol, const int health = 1, const int damage = 1, const int gold = 0);
-	~Creature();
 
 	const std::string& getName() const;
 	const char getSymbol() const;

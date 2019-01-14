@@ -7,11 +7,6 @@ Player::Player(const std::string& playerName)
 {
 }
 
-
-Player::~Player()
-{
-}
-
 void Player::levelUp()
 {
 	m_level += 1;

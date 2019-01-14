@@ -21,11 +21,13 @@ public:
 
 	//initialize MonsterGame with a string name 
 	MonsterGame(const std::string &playerName);
-
-	void startGame();
 	//print out the menu and options
-	void printMenu();
-	// listens for and handles user input for menu options
+	void printMenu() const;
+
+private:
+	void startGame();
+
+	//listens for and handles user input for menu options
 	Actions getMenuInput(const Monster &m);
 
 	//returns true if player won, false if player dies

@@ -3,15 +3,35 @@
 #include <cstdlib> // for rand() and srand()
 #include <ctime> // for time()
 Monster::Monster(const Type monsterType = Monster::SLIME)
-	: Creature(monsterData[monsterType].name, monsterData[monsterType].symbol, monsterData[monsterType].health, monsterData[monsterType].damage, monsterData[monsterType].gold)
+	: Creature(monsterData[monsterType].name, 
+		monsterData[monsterType].symbol, 
+		monsterData[monsterType].health, 
+		monsterData[monsterType].damage, 
+		monsterData[monsterType].gold),
+		m_isHoldingItem{ false }
 {
-
+	//random chance to have a held item
+	if (Monster::getRandomNumber(1, 3) == 2)
+	{
+		m_isHoldingItem = true;
+		m_heldItem = getRandomItem();
+	}
 }
 
 Monster::Monster(const Type monsterType, const std::string &monsterName)
-	: Creature(monsterName, monsterData[monsterType].symbol, monsterData[monsterType].health, monsterData[monsterType].damage, monsterData[monsterType].gold)
-{
-
+	: Creature(monsterName, 
+		monsterData[monsterType].symbol, 
+		monsterData[monsterType].health, 
+		monsterData[monsterType].damage, 
+		monsterData[monsterType].gold),
+		m_isHoldingItem{false} 
+{	
+	//random chance to have a held item
+	if (Monster::getRandomNumber(1, 3) == 2)
+	{
+		m_isHoldingItem = true;
+		m_heldItem = getRandomItem();
+	}
 }
 
 
@@ -23,6 +43,10 @@ Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]
 };
 
 
+Monster::Item Monster::getRandomItem()
+{
+	return static_cast<Monster::Item>(Monster::getRandomNumber(0, (MAX_ITEMS - 1)));
+}
 
 int Monster::getRandomNumber(int min, int max)
 {
@@ -30,6 +54,7 @@ int Monster::getRandomNumber(int min, int max)
 	// evenly distribute the random number across our range
 	return static_cast<int>(rand() * fraction * (max - min + 1) + min);
 }
+
 
 Monster Monster::getRandomMonster()
 {
@@ -41,4 +66,26 @@ std::ostream& operator<<(std::ostream &out, const Monster &m)
 {
 	out << "\n\n     " << m.getName() << "  HEALTH: " << m.getHealth() << "\n";
 	return out;
+}
+
+void Monster::printItem() const
+{
+	switch (m_heldItem)
+	{
+	case Item::POTION:
+		std::cout << "Potion";
+		break;
+	default:
+		std::cout << "Nothing";
+	}
+}
+
+
+const bool Monster::checkHasItem() const
+{
+	return m_isHoldingItem;
+}
+const Monster::Item& Monster::getItem() const
+{
+	return m_heldItem;
 }
