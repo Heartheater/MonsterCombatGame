@@ -3,7 +3,7 @@
 
 #include "Creature.hpp"
 
-class Player : public Creature
+class Player final : public Creature
 {
 private:
 	int m_level;
@@ -12,6 +12,7 @@ public:
 	Player(const std::string& playerName);
 
 	void levelUp();
+
 	const int getLevel() const;
 	//check if the player has won. Returns true if player reached level 20
 	bool hasWon() const;

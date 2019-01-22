@@ -8,7 +8,7 @@
 #include <cassert>
 
 
-class Monster : public Creature
+class Monster final : public Creature
 {
 public:
 	struct MonsterData
@@ -54,20 +54,8 @@ public:
 
 	void printItem() const;
 
-	void printAllStats() const
-	{
-		std::cout << "\n    " << getName() << "\n";
-		std::cout << "\tHEALTH: " << getHealth();
-		std::cout << "\n\tATTACK: " << getDamage();
-		std::cout << "\n\tGOLD: " << getGold() << "\n";
-		if (m_isHoldingItem)
-		{
-			std::cout << "\tITEM: ";
-			printItem();
-			std::cout << "\n";
-		}
-	}
-	//output operator prints Monster stats
+	void printAllStats() const;
+	//output operator prints Monster name and health
 	friend std::ostream& operator<<(std::ostream &out, const Monster &m);
 };
 

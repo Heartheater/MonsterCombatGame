@@ -36,7 +36,7 @@ Monster::Monster(const Type monsterType, const std::string &monsterName)
 
 
 Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]
-{
+{	//name, symbol, health, damage, gold
 	{"dragon", 'D', 20, 4, 100 },
 	{"orc", 'o', 4, 2, 25 },
 	{"slime", 's', 1, 1, 10 },
@@ -88,4 +88,18 @@ const bool Monster::checkHasItem() const
 const Monster::Item& Monster::getItem() const
 {
 	return m_heldItem;
+}
+
+void Monster::printAllStats() const
+{
+	std::cout << "\n    " << getName() << "\n";
+	std::cout << "\tHEALTH: " << getHealth();
+	std::cout << "\n\tATTACK: " << getDamage();
+	std::cout << "\n\tGOLD: " << getGold() << "\n";
+	if (m_isHoldingItem)
+	{
+		std::cout << "\tITEM: ";
+		printItem();
+		std::cout << "\n";
+	}
 }
