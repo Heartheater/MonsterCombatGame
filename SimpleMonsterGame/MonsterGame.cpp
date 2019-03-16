@@ -78,6 +78,32 @@ MonsterGame::Actions MonsterGame::getMenuInput(const Monster &m)
 	}
 }
 
+void MonsterGame::printUniqueDialogue(Monster &m)
+{
+	switch (m.getSymbol())
+	{
+	case 'B':
+		std::cout << "The smell makes you feel faint.\n";
+		break;
+	case 'E':
+		std::cout << "He seems to be searching the ground for something.\n";
+		break;
+	case 'e':
+		std::cout << "It looks more italian.\n";
+		break;
+	case 'R':
+		std::cout << "You feel the purple chinese crawling on your back.\n";
+		break;
+	case 'b':
+		std::cout << "You feel an ominous aura.\n";
+		break;
+	case 'S':
+		std::cout << "It's doing a wierd dance..\n";
+		break;
+	default:
+		break;
+	}
+}
 
 
 bool MonsterGame::runGame(Player &player)
@@ -91,8 +117,8 @@ bool MonsterGame::runGame(Player &player)
 		//generate monster
 		Monster m = Monster::getRandomMonster();
 		std::cout << "-------------------------------------\n";
-		std::cout << "A " << m.getName() << " (" << m.getSymbol() << ") appears.\n";
-		
+		std::cout << "A wild " << m.getName() << " appears.\n";
+		printUniqueDialogue(m);
 		//player is now fighting a new monster
 		playerIsFighting = true;
 		//print out the menu at beginning of fight
@@ -122,7 +148,11 @@ bool MonsterGame::runGame(Player &player)
 				//check if monster is dead and player won
 				if (m.isDead())
 				{
-					std::cout << "\nYou defeated the " << m.getName() << " and got " << m.getGold() << " gold.\n";
+					std::cout << "\nYou defeated the " << m.getName() << " and got ";
+					if (m.getName() == "Evan") std::cout << " a restroom token..?\n";
+					else 
+					std::cout << m.getGold() << " gold.\n";
+
 					player.addGold(m.getGold());
 					player.levelUp();
 					std::cout << "\nYou leveled up to level " << player.getLevel() << "! +1ATTACK (" << player.getDamage() << ")\n";

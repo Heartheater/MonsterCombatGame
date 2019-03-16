@@ -37,9 +37,13 @@ Monster::Monster(const Type monsterType, const std::string &monsterName)
 
 Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]
 {	//name, symbol, health, damage, gold
-	{"dragon", 'D', 20, 4, 100 },
-	{"orc", 'o', 4, 2, 25 },
-	{"slime", 's', 1, 1, 10 },
+	{"Midget Blob", 'b', 40, 5, 200 },
+	{"Elf Midget", 'e', 4, 2, 25 },
+	{"Midget Slime", 's', 1, 1, 10 },
+	{"Rugby", 'R', 5, 3, 160 },
+	{"Evan", 'E', 18,2, 1 },
+	{"Barfy", 'B', 100, 6, 666},
+	{"SANES", 'S', 2, 77,5},
 };
 
 

@@ -33,7 +33,8 @@ private:
 	//returns true if player won, false if player dies
 	bool runGame(Player &player);
 	void endGame();
-	
+	void printUniqueDialogue(Monster &m);
+
 };
 
 #endif //MONSTER_GAME_HPP_

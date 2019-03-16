@@ -21,9 +21,13 @@ public:
 	};
 	enum Type
 	{
-		DRAGON,
-		ORC,
+		MIDGET_BLOB,
+		ELF_MIDGET,
 		SLIME,
+		RUGBY,
+		EVAN,
+		BARFY,
+		SANES,
 		MAX_TYPES
 	};
 	enum Item
